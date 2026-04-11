@@ -1,0 +1,13 @@
+from fastapi import APIRouter, Depends , UploadFile
+from src.Helpers.config import get_settings, Settings
+
+
+Data_router = APIRouter(prefix="/api/v1/Data", tags=["Data,V1"])
+
+
+@Data_router.post("/upload/{Project_id}")
+async def Upload(Project_id:str,file : UploadFile,
+                app_settings : Settings = Depends(get_settings)): 
+    #validations on the file frst 
+    
+    return ""
