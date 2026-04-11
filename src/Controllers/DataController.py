@@ -2,12 +2,12 @@ from .BaseController import BaseContoller
 from fastapi import UploadFile 
 from src.Models import responseEnum
 class DataController(BaseContoller):
-    def __int__(self):
-        super().__int__()
+    def __init__(self):
+        super().__init__()
 
 
     #validate the data 
-    def validateUploadedFile(self,file :UploadFile)->bool:
+    def validateUploadedFile(self,file :UploadFile) -> tuple[bool,responseEnum.ResponseSignal]:
         #check the file type 
         if file.content_type not in self.app_settings.FILE_ALLOWED_TYPES:
             return False,responseEnum.ResponseSignal.FILE_TYPE_NOT_ALLOWED.value
