@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends , UploadFile
 from src.Helpers.config import get_settings, Settings
-from Controllers import DataController   
+from src.Controllers import DataController   
 
 Controller = DataController()
 Data_router = APIRouter(prefix="/api/v1/Data", tags=["Data,V1"])
