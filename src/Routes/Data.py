@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, UploadFile, HTTPException, status
+from fastapi.responses import JSONResponse
 from src.Helpers.config import get_settings, Settings
 from src.Controllers import DataController
 
@@ -12,8 +13,5 @@ async def Upload(Project_id: str, file: UploadFile,
     # validations on the file frst
     isValid, signal = Controller.validateUploadedFile(file)
     if not isValid:
-        return {"signal": signal, "message": "File validation failed",
-                "status": status.HTTP_422_UNPROCESSABLE_ENTITY,
-                "exception": HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                                           detail="File validation failed")}
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"message": signal})
     # if valid then save the file
