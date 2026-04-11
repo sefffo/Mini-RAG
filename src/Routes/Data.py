@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends , UploadFile
+from fastapi import APIRouter, Depends , UploadFile , HTTPException
 from src.Helpers.config import get_settings, Settings
 from src.Controllers import DataController   
 
@@ -11,6 +11,6 @@ async def Upload(Project_id:str,file : UploadFile,
     #validations on the file frst 
     isValid = Controller.validateUploadedFile(file)
     if not isValid:
-        return {"error":"Invalid file. Please upload a valid file."  , "is_valid": isValid}
+        return {"error": HTTPException(status_code=422, detail="Invalid file. Please upload a valid file.")  , "is_valid": isValid , "message": "File validation failed. Please check the file type and size."}
     #if valid then save the file
     

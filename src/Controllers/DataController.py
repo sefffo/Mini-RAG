@@ -1,6 +1,6 @@
 from .BaseController import BaseContoller
 from fastapi import UploadFile 
-
+from src.Models import responseEnum
 class DataController(BaseContoller):
     def __int__(self):
         super().__int__()
@@ -10,11 +10,11 @@ class DataController(BaseContoller):
     def validateUploadedFile(self,file :UploadFile)->bool:
         #check the file type 
         if file.content_type not in self.app_settings.FILE_ALLOWED_TYPES:
-            return False
+            return False,responseEnum.ResponseSignal.FILE_TYPE_NOT_ALLOWED.value
         
         #check the file size 
         if file.size > self.app_settings.FILE_MAX_SIZE * 1024 * 1024:
-            return False
+            return False,responseEnum.ResponseSignal.FILE_SIZE_EXCEEDED.value
         
-        return True
+        return True ,responseEnum.ResponseSignal.SUCCESS.value
 
