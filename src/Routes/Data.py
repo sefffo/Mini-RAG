@@ -6,6 +6,9 @@ from src.Controllers import ProjectController
 from src.Models.enums import responseEnum 
 import os
 import aiofiles
+import logging as log
+
+log = log.getLogger('uvicorn.error')
 Controller = DataController()
 Data_router = APIRouter(prefix="/api/v1/Data", tags=["Data,V1"])
 
@@ -33,6 +36,7 @@ async def Upload(Project_id: str, file: UploadFile,
             while chunk := await file.read(app_settings.FILE_DEFAULT_CHUNK_SIZE):
                 await f.write(chunk)
     except Exception as ex:
-        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"message": responseEnum.ResponseSignal.FILE_UPLOAD_FAILED.value, "details": str(ex)})
+        log.error(f"Error occurred while uploading file: {ex}")
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"message": responseEnum.ResponseSignal.FILE_UPLOAD_FAILED.value})
 
     return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": signal})
