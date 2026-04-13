@@ -24,15 +24,12 @@ async def Upload(Project_id: str, file: UploadFile,
 
     project_dir_path = project.getProjectPath(projectId=Project_id)
 
-    file_path = os.path.join(
-        project_dir_path,
-        file.filename
-    )
+    file_path = Controller.GenrateRandomFileName(file.filename , Project_id)
     #write it binary 
     async with aiofiles.open(file_path , "wb") as f:
         #we gonna move chunk default size 
         while chunk:= await file.read(app_settings.FILE_DEFAULT_CHUNK_SIZE):
-            await file.write(chunk)
+            await f.write(chunk)
 
     return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": signal})
     
