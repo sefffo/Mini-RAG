@@ -1,7 +1,7 @@
 from .BaseController import BaseContoller
 from fastapi import UploadFile
 from src.Models import responseEnum
-from src.Controllers import ProjectController
+from src.Controllers.ProjectController import ProjectController
 import re
 import os
 
@@ -25,7 +25,7 @@ class DataController(BaseContoller):
     def GenrateRandomFileName(self, orginalFileName: str, projectId: str):
         randomFileName = self.generateRandomString()
         # get path of the project folder
-        path = ProjectController.getProjectPath(projectId)
+        path = ProjectController().getProjectPath(projectId)
 
         cleanedFileName = self.getCleanFileName(orginalFileName)
         locatedFile = os.path.join(
