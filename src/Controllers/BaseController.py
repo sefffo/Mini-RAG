@@ -5,4 +5,4 @@ class BaseContoller:
         self.app_settings = get_settings()
         self.BaseDir = os.path.dirname(os.path.abspath(__file__))
 
-        self.fileUploadDir = os.path.join(self.BaseDir, "Assets/files")
+        self.filesUploadDir = os.path.join(self.BaseDir, "Assets/files")
